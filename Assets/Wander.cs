@@ -13,6 +13,7 @@ public class Wander : MonoBehaviour
     float rotationSpeed = 5f;
     float speed;
     Vector3 target;
+    float angle;
 
     void Start()
     {
@@ -39,11 +40,17 @@ public class Wander : MonoBehaviour
         if (timeCounter + 0.3f < Time.time)
         {
             timeCounter = Time.time;
-            float x = Mathf.Cos(Random.Range(-1f, 1f));
-            float y = Mathf.Sin(Random.Range(-1f, 1f));
-            float z = transform.position.z + Random.Range(-1f, 1f);
 
-            target = new Vector3(x, y, z);
+            angle += Random.Range(-10, 10);
+
+            float radius = 4;
+            float circleOffset = 5;
+
+            Vector3 circleCentrum = Vector3.Normalize(target - transform.position) * circleOffset;
+
+            target.x = circleCentrum.x + radius * Mathf.Sin(angle * Mathf.Deg2Rad);
+            target.y = circleCentrum.y;
+            target.z = circleCentrum.z + radius * Mathf.Cos(angle * Mathf.Deg2Rad);
         }
     }
 }
